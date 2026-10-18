@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Inducción SENA - ADSO</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sena-green: #39A900;
+            --sena-green-dark: #2d8500;
+            --bg-light: #f8fafc;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent-light: #f1f5f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 4px solid var(--sena-green);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 1rem;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .header-title h1 {
+            color: var(--sena-green);
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header-title p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .header-info {
+            text-align: right;
+        }
+
+        .header-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .header-info span {
+            color: var(--sena-green-dark);
+            font-weight: 600;
+        }
+
+        /* Menú Principal Superior (Pestañas principales) */
+        .nav-guias {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background-color: var(--accent-light);
+            color: var(--text-muted);
+            border: 1px solid var(--card-border);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover:not(.active) {
+            background-color: #e2e8f0;
+            color: var(--text-main);
+        }
+
+        .nav-btn.active {
+            background-color: var(--sena-green);
+            color: white;
+            border-color: var(--sena-green);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .seccion-guia {
+            display: none;
+        }
+
+        .seccion-guia.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--sena-green-dark);
+            margin-bottom: 1.2rem;
+            border-bottom: 2px solid var(--sena-green);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Submenús internos */
+        .subnav-container {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            background-color: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .subnav-btn {
+            background-color: var(--accent-light);
+            color: var(--text-muted);
+            border: 1px solid var(--card-border);
+            padding: 8px 14px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .subnav-btn:hover:not(.active) {
+            background-color: #e2e8f0;
+            color: var(--text-main);
+        }
+
+        .subnav-btn.active {
+            background-color: var(--sena-green);
+            color: white;
+            font-weight: 600;
+            border-color: var(--sena-green);
+        }
+
+        .subseccion-contenido {
+            display: none;
+        }
+
+        .subseccion-contenido.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            color: var(--sena-green-dark);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--sena-green);
+            padding-left: 10px;
+        }
+
+        .card h4 {
+            color: var(--text-main);
+            font-size: 1.1rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p, .card li {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .card strong {
+            color: var(--text-main);
+        }
+
+        .card ul, .card ol {
+            padding-left: 1.2rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Estilo para las imágenes integradas */
+        .content-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 1.2rem;
+            border: 1px solid var(--card-border);
+        }
+
+        /* Contenedor de Videos Responsivos */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin-top: 1.2rem;
+            margin-bottom: 1.2rem;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Tablas personalizadas */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+        }
+
+        .custom-table th, .custom-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .custom-table th {
+            background-color: #f1f8eb;
+            color: var(--sena-green-dark);
+            font-weight: 600;
+        }
+
+        .custom-table td strong {
+            color: var(--text-main);
+        }
+
+        footer {
+            background-color: #ffffff;
+            border-top: 2px solid var(--sena-green);
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: auto;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-team {
+            color: var(--sena-green-dark);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <div class="header-brand">
+                <img src="logo.png" alt="Logo SENA" class="header-logo">
+                <div class="header-title">
+                    <h1>Proyecto Inducción SENA</h1>
+                    <p>Tecnólogo en Análisis y Desarrollo de Software (ADSO)</p>
+                </div>
+            </div>
+            <div class="header-info">
+                <p>Nombre del Grupo: <span>Doofenshmirtz Malvados y Asociados</span></p>
+                <p>Realizadores: <span>Sebastian, Monica, David, Jefferson, Cristian</span></p>
+            </div>
+        </div>
+
+        <!-- Menú Principal Superior (Pestañas principales) -->
+        <div class="nav-guias">
+            <button class="nav-btn active" onclick="cambiarGuia(event, 'guia1')">Guía 1: Identidad & Estructura</button>
+            <button class="nav-btn" onclick="cambiarGuia(event, 'caso-reglamento')">Caso: Reglamento del Aprendiz</button>
+            <button class="nav-btn" onclick="cambiarGuia(event, 'guia2')">Guía 2: Proceso de Gestión</button>
+            <button class="nav-btn" onclick="cambiarGuia(event, 'guia3')">Guía 3: Mujica & Proyecto de Vida</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- ================= GUÍA 1 ================= -->
+        <div id="guia1" class="seccion-guia active">
+            <h2 class="section-title">Guía 1: Contexto Institucional, Historia y Reglamento</h2>
+            
+            <div class="subnav-container">
+                <button id="btn-sub1" class="subnav-btn active" onclick="cambiarSubGuia(event, 'sub1', 'subseccion-g1', 'btn-sub')">1. Reflexión Inicial</button>
+                <button id="btn-sub2" class="subnav-btn" onclick="cambiarSubGuia(event, 'sub2', 'subseccion-g1', 'btn-sub')">2. Contextualización SENA</button>
+                <button id="btn-sub3" class="subnav-btn" onclick="cambiarSubGuia(event, 'sub3', 'subseccion-g1', 'btn-sub')">3. Nota Periodística e Historia</button>
+                <button id="btn-sub4" class="subnav-btn" onclick="cambiarSubGuia(event, 'sub4', 'subseccion-g1', 'btn-sub')">4. Misión y Visión</button>
+                <button id="btn-sub5" class="subnav-btn" onclick="cambiarSubGuia(event, 'sub5', 'subseccion-g1', 'btn-sub')">5. Estructura Orgánica</button>
+                <button id="btn-sub6" class="subnav-btn" onclick="cambiarSubGuia(event, 'sub6', 'subseccion-g1', 'btn-sub')">6. Identidad Corporativa</button>
+                <button id="btn-sub7" class="subnav-btn" onclick="cambiarSubGuia(event, 'sub7', 'subseccion-g1', 'btn-sub')">7. Servicios al Aprendiz</button>
+            </div>
+
+            <div id="sub1" class="subseccion-contenido subseccion-g1 active">
+                <div class="card">
+                    <h3>Reflexión Inicial</h3>
+                    <p><strong>¿Quién soy yo y cómo me veo como egresado, aportando al desarrollo social y técnico del país?</strong></p>
+                    <p style="margin-top: 0.8rem;">Somos personas con capacidades y valores que nos sentimos agradecidos de poder ingresar y de esta manera aportar nuestro conocimiento y al desarrollo, al momento de finalizar nuestros estudios, teniendo en cuenta nuestro compromiso con esta oportunidad.</p>
+                    
+                    <img src="que-es-territorium-en-el-sena-1090764.jpg" alt="Comunidad SENA" class="content-image">
+                </div>
+            </div>
+
+            <div id="sub2" class="subseccion-contenido subseccion-g1">
+                <div class="card">
+                    <h3>Actividades de Contextualización e Identificación de Conocimientos</h3>
+                    <p><strong>¿Que sabemos del Sena?</strong></p>
+                    <p style="margin-top: 0.4rem; margin-bottom: 1rem;">Tenemos entendido que es una institución pública, la cual se dedica a formar técnicos, tecnólogos, y en general a la formación gratuita, se entiende que su fuerza en la que radica está en la formación para las competencias laborales.</p>
+                    <p><strong>¿Cuál es su expectativa frente a la formación qué le puede ofrecer el Sena?</strong></p>
+                    <p style="margin-top: 0.4rem; margin-bottom: 1.2rem;">Se tiene una buena expectativa referente a la formación, ya que se obtendrá tanto una fase lectiva como productiva, y de esta manera se complementa de una excelente manera, ya que se obtiene de una vez una experiencia y en esta formación se debe realizar un proyecto que es importante para la etapa laboral.</p>
+                    
+                    <img src="sena_doble_titulacion.jpg" alt="Instalaciones y Logo SENA" class="content-image">
+                </div>
+            </div>
+
+            <div id="sub3" class="subseccion-contenido subseccion-g1">
+                <div class="card">
+                    <h3>Nota Periodística (Radiodifusora Nacional de Colombia)</h3>
+                    <p><strong>¡Bienvenidos a nuestro noticiero de la RADIODIFUSORA NACIONAL DE COLOMBIA, hoy miércoles 21 de junio de 1957!, se crea el Servicio Nacional de Aprendizaje SENA.</strong></p>
+                    <p style="margin-top: 0.8rem;">Se comprende que es una metodología experimentada en Europa. Se entiende que entre el siglo XIX e inicio del siglo XX, luego de finalizar la Primera Guerra Mundial allí nace la iniciativa de formación profesional. Gracias a varios países que aportaron en el conocimiento, en eso se está Alemania, Francia, instituciones benévolas como: País Vasco y Cataluña y el diseño del sistema preventivo en Italia de Don Bosco.</p>
+                    <p style="margin-top: 0.8rem;">Pero ni más ni menos gracias a estos conocimientos aportados y experiencias Brasil creó SENA esta institución junto con la OTP fueron unos encargados de recomendar la formación profesional en latinoamérica. En 1948, existe un hallazgo importante en la historia de Colombia, llamado el bogotazo el cual abre camino a que la UTC (unión de trabajadores de Colombia) en el quinto congreso, se le pide al gobierno la posible creación de un instituto y en 1954 se crea en instituto de capacitación obrera. A esto también se le suma una huelga que se realizó en mayo de 1957, que solicita la creación de una institución con mayor cobertura y más apoyo quien lideró en esa época. La UTC fue <strong>Rodolfo Martínez Tono</strong>. El cual de forma positiva nace el decreto 118 del 21 de junio de 1957. Y de esta manera nace EL SENA.</p>
+                    
+                    <img src="images.png" alt="Nota Periodística SENA" class="content-image">
+                </div>
+            </div>
+
+            <div id="sub4" class="subseccion-contenido subseccion-g1">
+                <div class="card">
+                    <h3>Misión y Visión</h3>
+                    <p><strong>¿Qué hace el SENA?</strong></p>
+                    <p style="margin-top: 0.4rem; margin-bottom: 1rem;"><em>"Estoy interesado en estudiar, confección industrial me han dicho que el sena puedo estudiar cuénteme qué hace el sena"</em></p>
+                    <p><strong>Rta:</strong> Por supuesto, allí puedes estudiar, ya que es una institución pública y gratuita, esta se enfoca en capacitar tanto técnicos como tecnólogos y estudios complementarios y de esta manera maximiza que una persona tenga un desarrollo integral y así puedan contar al desarrollo laboral, social y tecnológico de Colombia.</p>
+                    
+                    <img src="images.jpg" alt="Fachada y Bandera SENA" class="content-image">
+                </div>
+            </div>
+
+            <div id="sub5" class="subseccion-contenido subseccion-g1">
+                <div class="card">
+                    <h3>Estructura Orgánica del SENA</h3>
+                    <ul>
+                        <li><strong>Director General:</strong> Fray Ricardo Torres Castro</li>
+                        <li><strong>Regionales del SENA:</strong> Cuenta con 32 regionales</li>
+                        <li><strong>Director Regional (Distrito Capital):</strong> Claudia Janet Gomez Larrotta</li>
+                        <li><strong>Subdirector del centro de formación y coordinación académica:</strong> Viviana Gómez Vargas</li>
+                    </ul>
+
+                    <h4>Identificación del Centro de Formación y Dependencias</h4>
+                    <ul>
+                        <li><strong>Coordinación Académica:</strong>
+                            <ul>
+                                <li>Guillermo Adrián Linares / glinares@sena.edu.co</li>
+                                <li>Aida Bohorquez Agudelo / abohorqueza@sena.edu.co</li>
+                                <li>Fabio Alonso Camacho Sapuy / facamacho@sena.edu.co</li>
+                            </ul>
+                        </li>
+                        <li><strong>Coordinación Misional:</strong>
+                            <ul>
+                                <li>Mariluz Rincón Prieto / Mrinconpr@sena.edu.co</li>
+                            </ul>
+                        </li>
+                        <li><strong>Biblioteca:</strong>
+                            <ul>
+                                <li>Nuri Andrea Forero Ariza / nforeroa@sena.edu.co</li>
+                            </ul>
+                        </li>
+                        <li><strong>Bienestar al Aprendiz:</strong>
+                            <ul>
+                                <li>Astrid Elena Bonilla Valencia / aebonilla@sena.edu.co</li>
+                                <li>Elvia Del Pilar Rojas Moreno / erojasm@sena.edu.co</li>
+                                <li>Myriam Georgina Galindo Galindo / mgalindo@sena.edu.co</li>
+                            </ul>
+                        </li>
+                        <li><strong>Administración Educativa:</strong>
+                            <ul>
+                                <li>Jarinsson Gómez Repizo / jargomez@sena.edu.co</li>
+                                <li>Angie Lorena Pardo Gutiérrez / apardog@sena.edu.co</li>
+                            </ul>
+                        </li>
+                        <li><strong>Funcionario Encargado de Etapa Productiva:</strong>
+                            <ul>
+                                <li>Gloria Mercedes Marín Grisales / gmmarin@sena.edu.co</li>
+                            </ul>
+                        </li>
+                        <li><strong>Sennova:</strong> Pendiente</li>
+                    </ul>
+
+                    <h4>Ambientes de Formación</h4>
+                    <p>En el conocimiento actual y nuestro primer trimestre tendremos clases en los ambientes: <strong>218 - 208 - 222 - 217</strong></p>
+                </div>
+            </div>
+
+            <div id="sub6" class="subseccion-contenido subseccion-g1">
+                <div class="card">
+                    <h3>Identidad Corporativa SENA</h3>
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>MISIÓN</th>
+                                <th>SÍMBOLO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>"El Servicio Nacional de Aprendizaje SENA, está encargado de cumplir la función que corresponde al estado de invertir en el desarrollo social y técnico de los trabajadores colombianos, ofreciendo y ejecutando la formación Profesional Integral para la incorporación y el desarrollo de las personas en actividades productivas que contribuyan al desarrollo social, económico y tecnológico del país."</td>
+                                <td>
+                                    <strong>Himno:</strong> Hace referencia a la motivación para que cada persona del país se pueda capacitar sin importar de qué parte del país sea.<br><br>
+                                    <strong>Escudo:</strong> Este hace referencia a que no solo está enfocado en una sola rama sino que cuenta con la capacitación en la industria, en el campo y en el comercio.<br><br>
+                                    <strong>Bandera:</strong> Con su mismo significado como el escudo, más sin embargo con un plus y es su color blanco que refleja la paz y transparencia de la institución.<br><br>
+                                    <strong>Logo-símbolo:</strong> Refleja que el centro del SENA es el aprendiz, brindándole desarrollo integral en la educación para la vida laboral.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <img src="image_3ef424.png" alt="Identidad Corporativa SENA" class="content-image">
+                </div>
+            </div>
+
+            <div id="sub7" class="subseccion-contenido subseccion-g1">
+                <div class="card">
+                    <h3>Servicios a los que tiene derecho en el SENA</h3>
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>INFORMACIÓN</th>
+                                <th>QUÉ COMPRENDE</th>
+                                <th>UBICACIÓN / RESPONSABLE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Fondo emprender</strong></td>
+                                <td>Fondo de capital semilla financiado por el SENA para apoyar iniciativas empresariales, emprendimientos y proyectos innovadores desarrollados por aprendices y egresados.</td>
+                                <td>Calle 57 No. 8 - 69 Bogotá D.C</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Agencia pública de empleo</strong></td>
+                                <td>Servicio de intermediación laboral que conecta a los aprendices y egresados con vacantes del sector productivo, orientando en la elaboración de hoja de vida y entrevistas laborales.</td>
+                                <td>Alejandra Rojas<br>Calle 57 No. 8 - 69 Bogotá D.C</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Relaciones corporativas</strong></td>
+                                <td>Área encargada de la gestión del contrato de aprendizaje, homologación de etapa práctica, convenios empresariales y seguimiento de la vinculación de aprendices a las empresas.</td>
+                                <td>Gloria Mercedes Marín<br>Gmmarin@sena.edu.co</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SENNOVA</strong></td>
+                                <td>Sistema de Investigación, Desarrollo Tecnológico e Innovación del SENA. Promueve proyectos de investigación aplicada, semilleros y desarrollo tecnológico en las áreas del centro (cuero, calzado, marroquinería, confección).</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bienestar al aprendiz</strong></td>
+                                <td>Programa de apoyo integral que promueve la permanencia, salud, deporte, cultura, apoyo socioeconómico (apoyos de sostenimiento), liderazgo y orientación psicológica.</td>
+                                <td>Lina Palencia<br>Centro de Manufacturas de Textil y Cuero (Segundo piso)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Administración educativa</strong></td>
+                                <td>Área responsable del registro de matrícula, novedades académicas (cancelaciones, aplazamientos, traslados), expedición de certificados, constancias y registro en Sofía Plus.</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Biblioteca</strong></td>
+                                <td>Espacio físico y digital que ofrece préstamo de libros técnicos, bases de datos académicas, espacios de lectura, salas de cómputo y consulta especializada para la formación.</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= CASO: REGLAMENTO DEL APRENDIZ ================= -->
+        <div id="caso-reglamento" class="seccion-guia">
+            <h2 class="section-title">Caso: Reglamento del Aprendiz</h2>
+            
+            <div class="card">
+                <table class="custom-table" style="margin-bottom: 1.5rem;">
+                    <thead>
+                        <tr>
+                            <th>CONTEXTO Y CASO</th>
+                            <th>DESCRIPCIÓN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Contexto</strong></td>
+                            <td>Grupo de 25 aprendices en etapa lectiva, la mayoría de ellos presenta problemas de rendimiento académico reiterado.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Caso Planteado</strong></td>
+                            <td>Los instructores del equipo ejecutor han percibido que algunos aprendices han reprobado un 35% de los resultados de aprendizaje, además de percibir olor a marihuana y estados alterados de conciencia y motricidad al llegar al ambiente. El líder de grupo afirma que conversó con ellos y manifiestan que consumen sustancias psicoactivas porque les hace sentir más seguros y mejora su capacidad.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="color: var(--sena-green-dark); margin-top: 1.5rem; margin-bottom: 0.8rem;">Solución del Caso:</h4>
+                
+                <p><strong>1. Calificación de la falta:</strong><br>
+                Es considerada una falta grave, debido a qué el consumo de sustancias psicoactivas o llegar a la institución bajo el efecto de alguna de ellas constituye una falta grave, ya qué afecta la convivencia y el proceso formativo, sumado al bajo rendimiento repetitivo y la reprobación de más del 35% de los resultados de aprendizaje.</p>
+                
+                <p style="margin-top: 1rem;"><strong>2. Los criterios de calificación:</strong><br>
+                Se tienen en cuenta factores cómo el grado de culpabilidad, el daño causado a la institución o la comunidad educativa, al ser una conducta reiterada y la afectación al desarrollo de aprendizaje.</p>
+                
+                <p style="margin-top: 1rem;"><strong>3. Clasificación de la falta:</strong><br>
+                Es clasificada como <strong>Grave</strong>.</p>
+                
+                <p style="margin-top: 1rem;"><strong>4. Artículos y literales vulnerados (Reglamento del Aprendiz):</strong></p>
+                <ul style="margin-top: 0.3rem;">
+                    <li><strong>Consumo de sustancias psicoactivas:</strong> Capítulo de deberes y prohibiciones. Artículo 9 (prohibiciones), <em>Literal c</em> (ingreso, porte, comercialización, distribución de sustancias psicoactivas o bebidas embriagantes).</li>
+                    <li><strong>Bajo rendimiento reiterado (reprobar el 35%):</strong> Capítulo de deberes y del proceso de formación / evaluación. Artículo 7 (deberes del aprendiz), literales relacionados con cumplir con las actividades de formación, aprobar los resultados de aprendizaje en las fechas establecidas y mantener un rendimiento académico adecuado.</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>5. Debido proceso (Medidas formativas, sanciones y procedimiento):</strong></p>
+                <ol style="padding-left: 1.2rem; margin-top: 0.3rem; color: var(--text-muted);">
+                    <li>El instructor o equipo comunica el caso de manera escrita al coordinador del centro.</li>
+                    <li>Se cita al aprendiz o aprendices involucrados a descargos garantizando su derecho a la defensa y debido proceso.</li>
+                    <li>Se reúne el comité de evaluación y seguimiento para analizar las evidencias (bajo rendimiento y reporte de la situación).</li>
+                    <li>El comité emite una recomendación y el subdirector toma la decisión mediante resolución, la cual puede acarrear una sanción cómo el condicionamiento de la matrícula o la cancelación.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- ================= GUÍA 2 ================= -->
+        <div id="guia2" class="seccion-guia">
+            <h2 class="section-title">Guía 2: Proceso de Gestión</h2>
+            
+            <div class="subnav-container">
+                <button id="btn-g2-1" class="subnav-btn active" onclick="cambiarSubGuia(event, 'g2-sub1', 'subseccion-g2', 'btn-g2')">1. Reflexión Inicial</button>
+                <button id="btn-g2-2" class="subnav-btn" onclick="cambiarSubGuia(event, 'g2-sub2', 'subseccion-g2', 'btn-g2')">2. Contextualización</button>
+                <button id="btn-g2-3" class="subnav-btn" onclick="cambiarSubGuia(event, 'g2-sub3', 'subseccion-g2', 'btn-g2')">3. Proceso de Gestión</button>
+                <button id="btn-g2-4" class="subnav-btn" onclick="cambiarSubGuia(event, 'g2-sub4', 'subseccion-g2', 'btn-g2')">4. Competencias</button>
+                <button id="btn-g2-5" class="subnav-btn" onclick="cambiarSubGuia(event, 'g2-sub5', 'subseccion-g2', 'btn-g2')">5. Etapa Productiva</button>
+                <button id="btn-g2-6" class="subnav-btn" onclick="cambiarSubGuia(event, 'g2-sub6', 'subseccion-g2', 'btn-g2')">6. Evaluación</button>
+                <button id="btn-g2-7" class="subnav-btn" onclick="cambiarSubGuia(event, 'g2-sub7', 'subseccion-g2', 'btn-g2')">7. Certificación</button>
+                <button id="btn-g2-8" class="subnav-btn" onclick="cambiarSubGuia(event, 'g2-sub8', 'subseccion-g2', 'btn-g2')">8. Cadena de Formación</button>
+                <button id="btn-g2-9" class="subnav-btn" onclick="cambiarSubGuia(event, 'g2-sub9', 'subseccion-g2', 'btn-g2')">9. Actividad de Transferencia</button>
+            </div>
+
+            <!-- G2 - Sub 1 -->
+            <div id="g2-sub1" class="subseccion-contenido subseccion-g2 active">
+                <div class="card">
+                    <h3>1. Reflexión Inicial: Procesos Industriales de Totto y Software</h3>
+                    <p>En el video a continuación podemos observar cómo diversos procesos ayudan a la organización de una empresa en este caso Totto, de ahí se pudo detallar varios procesos qué a su vez relacionamos con el área de enfoque de nuestra formación:</p>
+                    
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/NUDgl37Uhag" title="Video Totto - Procesos Industriales" allowfullscreen></iframe>
+                    </div>
+
+                    <ul style="margin-top: 1rem;">
+                        <li style="margin-bottom: 0.8rem;"><strong>1. Recepción y control de materia prima:</strong> mediante un proceso físico se hace la recepción de la materia prima, a su vez se hace una clasificación por varias categorías ya impuestos por la empresa. En la parte del software analizamos qué este proceso se hace mediante un sistema de gestión de control de inventarios qué registra la entrada, stock y lotes de los materiales en una base de datos.</li>
+                        <li style="margin-bottom: 0.8rem;"><strong>2. Ingeniería de producto, trazo y lote:</strong> ya internamente se hace el proceso de impresión de patrones, extendido de telas y uso de las diversas máquinas de corte ya sean manuales o automáticas. Gracias a un software CAD (Diseño asistido por computadora), se agiliza el proceso y ayuda a optimizar el rendimiento de la tela, mediante coordenadas facilitando el uso de las mismas.</li>
+                        <li style="margin-bottom: 0.8rem;"><strong>3. Proceso de bordado y estampado:</strong> mediante máquinas bordadoras programadas. En la actualidad la mayoría de máquinas de bordado y diseño operan con archivos vectoriales y de control digital donde se define colores, patrones de manera más minuciosa y detallada.</li>
+                        <li style="margin-bottom: 0.8rem;"><strong>4. Confección y ensamble:</strong> acá se hace lo qué en la unión de las diversas partes (forros, refuerzos, correas, entre otras). Esto es gracias a un sistema ERP (Planificación de recursos empresariales) las cuales asignan órdenes de producción, y mide tiempos.</li>
+                        <li><strong>5. Distribución y comercialización:</strong> se evidencia el proceso de alistamiento, clasificación y despacho de los productos a las tiendas alrededor del país. Gracias a plataformas logísticas de despacho, inventario, códigos de barras en un sistema POS ayudan al rastreo de los diversos despachos para así asegurar la distribución de los mismos.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- G2 - Sub 2 -->
+            <div id="g2-sub2" class="subseccion-contenido subseccion-g2">
+                <div class="card">
+                    <h3>2. Actividades de Contextualización e Identificación de Conocimientos</h3>
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Lo que se conoce</th>
+                                <th>Lo que se quiere aprender</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tengo un conocimiento leve en el lenguaje HTML</td>
+                                <td>Quisiera aprender a realizar mejores formas de tomar análisis de datos que sean más eficientes y tengan más pericia a la toma de datos.</td>
+                            </tr>
+                            <tr>
+                                <td>Tengo conocimiento previo en C++ / C en los cuales he logrado hacer una calculadora o realizar anidados.</td>
+                                <td>Desearía aprender a realizar muy buenos trabajos de presentación mediante el Front end y ir mejorando con el tiempo la visualización de mis trabajos.</td>
+                            </tr>
+                            <tr>
+                                <td>Python</td>
+                                <td>Angular</td>
+                            </tr>
+                            <tr>
+                                <td>MySQL</td>
+                                <td>Back End</td>
+                            </tr>
+                            <tr>
+                                <td>Tengo conocimiento Arduino AS 400, son dos lenguajes de programación más guiados a la electrónica y a la automatización mediante microcontroladores.</td>
+                                <td>Tener una idea más especializada sobre la base de datos y cómo aprender a manejar datos de forma más concreta en la cual sea más fácil su búsqueda como la información que deseo dar.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- G2 - Sub 3 -->
+            <div id="g2-sub3" class="subseccion-contenido subseccion-g2">
+                <div class="card">
+                    <h3>3. Analizar los componentes del proceso de gestión de la Formación Profesional</h3>
+                    <img src="image6.jpg" alt="Mapa Conceptual Componentes y Etapas Guía 2" class="content-image">
+                </div>
+            </div>
+
+            <!-- G2 - Sub 4 -->
+            <div id="g2-sub4" class="subseccion-contenido subseccion-g2">
+                <div class="card">
+                    <h3>4. Competencias del programa de formación</h3>
+                    <p><strong>Información del Programa:</strong></p>
+                    <ul style="margin-bottom: 1.5rem;">
+                        <li><strong>Programa:</strong> ADSO (Análisis y Desarrollo de Software)</li>
+                        <li><strong>Modalidad:</strong> Presencial</li>
+                        <li><strong>Nivel:</strong> Tecnológico</li>
+                        <li><strong>Duración:</strong> 27 meses</li>
+                    </ul>
+
+                    <h4 style="color: var(--sena-green-dark);">Competencia: Elaboración de la Propuesta Técnica del Software</h4>
+                    
+                    <p style="margin-top: 1rem;"><strong>1. Definir especificaciones técnicas del software de acuerdo con las características del software a construir</strong></p>
+                    <p><strong>Criterios de evaluación:</strong></p>
+                    <ul>
+                        <li>Diseña formatos de fichas técnicas de acuerdo con estándares.</li>
+                        <li>Elabora referentes técnicos de acuerdo con la normatividad legal vigente.</li>
+                        <li>Dimensiona las licencias de software de acuerdo con las características de la solución y las necesidades de la empresa.</li>
+                        <li>Estima las condiciones técnicas y económicas de acuerdo con las características de la solución de software y las necesidades de la empresa.</li>
+                    </ul>
+                    <p><strong>Conocimientos de saber:</strong></p>
+                    <ul>
+                        <li><strong>Tecnología informática:</strong> características de hardware y software, tendencias de fabricación TI y mercado en el ámbito nacional e internacional.</li>
+                        <li><strong>Soluciones informáticas:</strong> diagnóstico de necesidades y elaboración de referentes técnicos.</li>
+                        <li><strong>Gestión tecnológica:</strong> conceptos y características, innovación, emprendimiento y actividades de la gestión tecnológica.</li>
+                        <li><strong>Contratación de servicios TI:</strong> concepto, tipos, principios, características y normatividad general de la contratación tanto privada como estatal.</li>
+                        <li><strong>Proyectos TI:</strong> tipos, características y fases.</li>
+                        <li><strong>Licenciamiento de software:</strong> concepto, tipos, características y diferencias de carácter técnico y de condiciones de cumplimiento.</li>
+                        <li><strong>Propiedad intelectual:</strong> derechos de autor, propiedad industrial y registro de software.</li>
+                    </ul>
+
+                    <p style="margin-top: 1.5rem;"><strong>2. Elaborar la propuesta técnica del software de acuerdo con las especificaciones técnicas definidas</strong></p>
+                    <p><strong>Criterios de evaluación:</strong></p>
+                    <ul>
+                        <li>Elabora un análisis comparativo de proveedores considerando costos, cantidad y especificaciones técnicas definidas.</li>
+                        <li>Estima los costos de software y hardware de acuerdo con las características del negocio.</li>
+                        <li>Documenta la propuesta técnica según las especificaciones de la solución de software.</li>
+                    </ul>
+                    <p><strong>Conocimientos de saber:</strong></p>
+                    <ul>
+                        <li><strong>Costos:</strong> conceptos, fundamentos y clasificación.</li>
+                        <li><strong>Ficha técnica:</strong> elementos mínimos para describir los referentes técnicos.</li>
+                        <li><strong>Términos de referencia:</strong> concepto, elementos y construcción.</li>
+                    </ul>
+
+                    <p style="margin-top: 1.5rem;"><strong>3. Validar las condiciones de la propuesta técnica del software de acuerdo con los intereses de las partes</strong></p>
+                    <p><strong>Criterios de evaluación:</strong></p>
+                    <ul>
+                        <li>Realiza la presentación de la propuesta según los propósitos de la negociación.</li>
+                        <li>Documenta las sugerencias del cliente según la necesidad del negocio.</li>
+                        <li>Ajusta los parámetros técnicos de acuerdo con los resultados de la negociación.</li>
+                    </ul>
+                    <p><strong>Conocimientos de saber:</strong></p>
+                    <ul>
+                        <li><strong>Comunicación:</strong> técnicas, tipos y habilidades.</li>
+                        <li><strong>Negociación de tecnología:</strong> estilos de negociación, principios de negociación, identificación y solución de conflictos.</li>
+                        <li><strong>Contrato:</strong> concepto, tipos, partes y normatividad.</li>
+                        <li><strong>Acuerdos de Nivel de Servicio (ANS):</strong> concepto, formulación y métricas.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- G2 - Sub 5 -->
+            <div id="g2-sub5" class="subseccion-contenido subseccion-g2">
+                <div class="card">
+                    <h3>5. Etapa Productiva</h3>
+                    <ul>
+                        <li style="margin-bottom: 1rem;"><strong>1. Contrato de Aprendizaje:</strong> Se compone de dos partes, del patrocinio y de su parte productiva donde el aprendiz goza de unos beneficios en los cuales recibe el 75% de un SMLMV con prestaciones de ley, y una parte productiva donde recibe el 100% de un SMLMV con prestaciones de ley.</li>
+                        <li style="margin-bottom: 1rem;"><strong>2. Pasantía:</strong> Donde el estudiante concierta un acuerdo con el contratante para poder realizar 40 a 48 horas semanales, en las cuales pueda desarrollar sus competencias referente al programa que está desarrollando sin ningún acuerdo monetario.</li>
+                        <li style="margin-bottom: 1rem;"><strong>3. Monitorias:</strong> Son actividades que permiten apoyar las actividades educativas de la institución con el fin de mejorar los planes de las actividades; normalmente para aplicar a esta opción se realizan convocatorias anuales en las cuales serán seleccionados los estudiantes.</li>
+                        <li style="margin-bottom: 1rem;"><strong>4. Asesoría en Pymes:</strong> El aprendiz busca una Pyme ya sea una institución nacional, ONG, o una entidad sin ánimo de lucro (Cruz Roja); se dará el visto bueno luego de que las PYME certifiquen el trabajo del aprendiz relacionado a los objetivos requeridos en el programa.</li>
+                        <li><strong>5. Vínculo Laboral:</strong> Se dará cuando el aprendiz contacte con una empresa la cual le permita aplicar sus competencias y resultados mediante un contrato laboral que permita al aprendiz desarrollar sus competencias con una remuneración económica.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- G2 - Sub 6 -->
+            <div id="g2-sub6" class="subseccion-contenido subseccion-g2">
+                <div class="card">
+                    <h3>6. Principios de Evaluación SENA</h3>
+                    <p>Está orientada a comprobar que el aprendiz realmente logre cumplir con todos los resultados de aprendizaje mediante las diversas evidencias. Se dividen en los siguientes principios:</p>
+                    <ul style="margin-top: 0.8rem;">
+                        <li><strong>Integral:</strong> tiene en cuenta el saber, el saber hacer y el ser, contemplando las dimensiones de la formación.</li>
+                        <li><strong>Continua:</strong> se realiza de manera consistente, no sólo en los ambientes sino en cada parte de la formación.</li>
+                        <li><strong>Participativa:</strong> involucra 3 partes importantes: la autoevaluación (criterio propio), la coevaluación (de los compañeros) y la heteroevaluación (realizada por el instructor).</li>
+                        <li><strong>Flexible:</strong> tiene una adaptabilidad dependiendo de los diversos contextos y características que lo involucran.</li>
+                        <li><strong>Objetiva y transparente:</strong> se maneja de una forma clara, basada en evidencias y resultados reales, evitando las subjetividades.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- G2 - Sub 7 -->
+            <div id="g2-sub7" class="subseccion-contenido subseccion-g2">
+                <div class="card">
+                    <h3>7. Certificación</h3>
+                    <p>El tipo de certificación que se recibirá es un título de formación titulada como <strong>Tecnólogo en Análisis y Desarrollo de Software (ADSO)</strong>, otorgado por el <strong>Centro de Manufactura en Textil y Cuero</strong>.</p>
+                </div>
+            </div>
+
+            <!-- G2 - Sub 8 -->
+            <div id="g2-sub8" class="subseccion-contenido subseccion-g2">
+                <div class="card">
+                    <h3>8. Cadena de Formación</h3>
+                    <p>Es cuando el aprendiz dispone de un seguimiento basado en lo estudiado, lo cual le permite fortalecer su crecimiento como profesional en instituciones que se dediquen a la formación profesional, donde el SENA tiene convenios con Universidades para tener continuidad en su crecimiento profesional.</p>
+                </div>
+            </div>
+
+            <!-- G2 - Sub 9 -->
+            <div id="g2-sub9" class="subseccion-contenido subseccion-g2">
+                <div class="card">
+                    <h3>3.4. Actividad de Transferencia: Plataformas y Servicios Institucionales</h3>
+                    <p>Evidencias del uso y reconocimiento de las plataformas tecnológicas del SENA:</p>
+
+                    <h4 style="color: var(--sena-green-dark); margin-top: 1.5rem;">1. Sofía Plus</h4>
+                    <p>Gestión de la oferta educativa, inscripción a programas, matrícula y consulta de resultados.</p>
+                    <img src="senasofia.png" alt="Sofía Plus" class="content-image">
+
+                    <h4 style="color: var(--sena-green-dark); margin-top: 1.5rem;">2. Creación de usuario de correo soysena</h4>
+                    <p>Validación y gestión sencilla de la cuenta de correo institucional.</p>
+                    <img src="clave.png" alt="Correo Soysena" class="content-image">
+
+                    <h4 style="color: var(--sena-green-dark); margin-top: 1.5rem;">3. Territorium</h4>
+                    <p>Ambiente Virtual de Aprendizaje (LMS) para el desarrollo de guías y entrega de evidencias.</p>
+                    <img src="Territorium.png" alt="Territorium" class="content-image">
+
+                    <h4 style="color: var(--sena-green-dark); margin-top: 1.5rem;">4. Biblioteca Sena</h4>
+                    <p>Integrador de recursos de información, catálogo bibliográfico, bases de datos y repositorio institucional.</p>
+                    <img src="Biblioteca Sena.png" alt="Biblioteca Sena" class="content-image">
+
+                    <h4 style="color: var(--sena-green-dark); margin-top: 1.5rem;">5. Certificados Sena</h4>
+                    <p>Plataforma para la consulta y descarga de certificados de formación y competencias laborales.</p>
+                    <img src="certificado.png" alt="Certificados Sena" class="content-image">
+
+                    <h4 style="color: var(--sena-green-dark); margin-top: 1.5rem;">6. Sistema Virtual de Aprendices (SVA) - Gestión del contrato de aprendizaje</h4>
+                    <p>Instructivo y pautas para el seguimiento y gestión de la etapa productiva bajo contrato de aprendizaje.</p>
+                    <img src="sva.png" alt="Sistema Virtual de Aprendices SVA" class="content-image">
+
+                    <h4 style="color: var(--sena-green-dark); margin-top: 1.5rem;">7. Blog Centro de Formación</h4>
+                    <p>Espacio informativo institucional del Centro de Manufactura en Textil y Cuero (avisos, eventos y ofertas de empleo).</p>
+                    <img src="blog.png" alt="Blog Centro de Formación" class="content-image">
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= GUÍA 3 ================= -->
+        <div id="guia3" class="seccion-guia">
+            <h2 class="section-title">Guía 3: Mujica & Proyecto de Vida</h2>
+            
+            <div class="subnav-container">
+                <button id="btn-g3-1" class="subnav-btn active" onclick="cambiarSubGuia(event, 'g3-sub1', 'subseccion-g3', 'btn-g3')">1. Reflexión (Mujica)</button>
+                <button id="btn-g3-2" class="subnav-btn" onclick="cambiarSubGuia(event, 'g3-sub2', 'subseccion-g3', 'btn-g3')">2. Contextualización</button>
+                <button id="btn-g3-3" class="subnav-btn" onclick="cambiarSubGuia(event, 'g3-sub3', 'subseccion-g3', 'btn-g3')">3. Proyecto de Vida</button>
+                <button id="btn-g3-4" class="subnav-btn" onclick="cambiarSubGuia(event, 'g3-sub4', 'subseccion-g3', 'btn-g3')">4. Autobiografía</button>
+                <button id="btn-g3-5" class="subnav-btn" onclick="cambiarSubGuia(event, 'g3-sub5', 'subseccion-g3', 'btn-g3')">5. Reescribir el Proyecto</button>
+            </div>
+
+            <!-- G3 - Sub 1 -->
+            <div id="g3-sub1" class="subseccion-contenido subseccion-g3 active">
+                <div class="card">
+                    <h3>1. Actividades de apropiación reflexión</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/tHkXmBzmq3A" title="Video José Mujica" allowfullscreen></iframe>
+                    </div>
+                    <p><strong>Según la mirada de Mujica responda a las preguntas:</strong></p>
+                    
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">¿Qué significan las palabras imposible y derrotado y en qué momento de su vida las aplicaría, teniendo en cuenta que para él lo imposible cuesta un poco más y derrotado, solamente es bajar las manos?</h4>
+                    <p><strong>R//:</strong> El significado de las palabras aplican según su tipo de contexto, pero para la vida diaria esto surgiría en los problemas de las personas o que abarcan como algo nulo de poder hacer, usualmente usamos esta palabra para indicar que no podremos hacer algo, pero teniendo en cuenta la filosofía de “Jose Mujica” nada es imposible para el humano siempre y cuando uno se esfuerce más, no simplemente dar el 100%, si no dar el 110% o como lo llaman las personas, dar la milla extra.</p>
+                    <p>El estar derrotado es simplemente un bloqueo o quedarse desanimado, para “Jose Mujica” esto solo es mantener firmemente la fe de continuar asi todo está acabado o si la solución seda difícil, pero no “bajar las manos”, ya que esto significa que no se desea luchar más, no continuar más.</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">¿Cuál es el sentido que hoy le está dando a su vida?</h4>
+                    <p><strong>R//:</strong> El sentido actual de nuestras vidas es lograr establecernos como profesionales en las áreas que nos apasionan en la vida o que establecemos como ideales para el desarrollo de nuestro camino laboral, el punto al final del camino es largo, donde actualmente estaremos laborando en lugares los cuales no enfocan nuestras competencias para nuestra carreras, pero nos ayuda a continuar el estudio hacia el grado profesional que queremos.</p>
+                </div>
+            </div>
+
+            <!-- G3 - Sub 2 -->
+            <div id="g3-sub2" class="subseccion-contenido subseccion-g3">
+                <div class="card">
+                    <h3>2. Actividades de contextualización</h3>
+                    <p>Reflexione sobre los sucesos que han marcado el desarrollo de su vida y responda las preguntas:</p>
+                    
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">1. ¿Quién soy?</h4>
+                    <p><strong>R//:</strong> Es una pregunta bastante amplia, en la cual se resumiría que soy alguien que desea crecer a pesar de limitaciones, laborales, económicas o personales, dando mi esfuerzo todos los días, con el fin de llegar a las metas impuestas en mi proyecto de vida.</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">2. ¿Quién quiero ser?</h4>
+                    <p><strong>R//:</strong> Una persona en búsqueda de completar su profesión, complementando su vocación a nivel de estudios y mejorando como persona.</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">3. ¿Qué camino debo tomar?</h4>
+                    <p><strong>R//:</strong> Usualmente el camino correcto no es simple de ver, la decisiones deben ser correctas para lograr un camino ideal y poder llegar a la meta, aunque a veces las respuestas erradas pueden ser mejores.</p>
+                </div>
+            </div>
+
+            <!-- G3 - Sub 3 -->
+            <div id="g3-sub3" class="subseccion-contenido subseccion-g3">
+                <div class="card">
+                    <h3>3. Proyecto de Vida</h3>
+                    <img src="image1.png" alt="Ilustración 1" class="content-image">
+
+                    <h4 style="color: var(--text-main); margin-top: 1.5rem;">¿En esta imagen considera que los dos personajes tienen la misma dignidad? y ¿por qué?</h4>
+                    <p><strong>R//:</strong> No, ya que la dignidad del segundo personaje está siendo respetada, vulnerada quitando derechos y opiniones.</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">¿En esta imagen considera que ambos personajes tienen la misma cultura? ¿Por qué?</h4>
+                    <p><strong>R//:</strong> No, ya que el primer personaje está sometiendo al segundo ideales, creencias y culturas las cuales no corresponden a las del segundo personaje.</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">¿Qué opina Ud. de esas expresiones? ”...Quién sos vos para juzgar si lo que hago es bueno o malo” y ”...respeta mi cultura”.</h4>
+                    <p><strong>R//:</strong> Es una expresión de superioridad e idealismos sobre quien verdaderamente puede juzgar los actos cometidos por las personas, ya que moralmente se tiene la creencia sobre un dios o presencia la cual dirige lo que es “Bueno” y “Malo”, esto creando que las personas al tener culturas distintas irrespetan los demás valores y tradiciones de otras culturas.</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">¿Qué opinión le merece la respuesta que tiene el personaje que caracteriza un nativo?</h4>
+                    <p><strong>R//:</strong> Actualmente se entenderá por entender y respetar las culturas y tradiciones de otras personas, teniendo en cuenta que la imagen se sitúa cuando los españoles “colonizaron” a nativos indígenas, esto generando disputas y esclavización de estos.</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">¿Si una acción maltrata la dignidad del ser humano, puede ser considerado un valor cultural?</h4>
+                    <p><strong>R//:</strong> Esto depende del tipo de contexto, ya que moralmente la dignidad del ser humano se trata de sostener como un derecho, por cultura se ayuda o se da dignidad a las personas.</p>
+                </div>
+            </div>
+
+            <!-- G3 - Sub 4 -->
+            <div id="g3-sub4" class="subseccion-contenido subseccion-g3">
+                <div class="card">
+                    <h3>4. Autobiografía</h3>
+                    <p>Con el fin de comunicar los acontecimientos vividos responda las siguientes preguntas, de manera descriptiva:</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">¿Quiénes han sido las personas que han tenido mayor influencia en su vida y de qué manera?</h4>
+                    <p><strong>R//:</strong> Familiares, amigos y conocidos, estos influyendo en función de sus propias experiencias o vivencias personales, dando sus mejores opiniones para ayudarme a elegir mi ruta en la vida.</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">¿Cuáles han sido los acontecimientos (dolorosos o alegres) que han influido en forma decisiva en lo que usted es ahora?</h4>
+                    <p><strong>R//:</strong> Accidentes, fallecimiento de familiares o amigos, pero no todo es triste, situaciones alegres como graduaciones, fiestas familiares o con amigos, reconocimientos en los cuales nos motivan a mejorar tanto como persona y personalmente.</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">¿Cuáles han sido sus principales éxitos y fracasos? y ¿porque lo recuerda especialmente?</h4>
+                    <p><strong>R//:</strong> Graduarme de tecnólogo en gestión del riesgo en seguros, crecimiento espiritual y paz mental, tener autonomía en el campo profesional y laboral, cuidar de mi salud y de mi alimentación en conjunto con la de salud y bienestar de mi familia, el tecnólogo lo recuerdo por que fue reciente y lo que hablo sobre la salud, crecimiento espiritual y paz mental lo vivo dia a dia esta muy presente en el diario vivir.</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">¿Cuáles han sido las decisiones más significativas que ha tomado? y ¿qué consecuencias tuvieron en su vida?</h4>
+                    <p><strong>R//:</strong> Retomar estudios de nuevo, teniendo en cuenta que tengo una familia un hogar bastante grande a donde mi esposa y mis tres hijos son mi pilar y sacar tiempo de calidad que les podría brindar a ellos y dedicarle al estudio es una decisión muy significativa, por que me hizo organizar mi tiempo entre el trabajo y la familia, las consecuencias son positivas y negativas, porque aprendo cosas nuevas y me actualizo en el tema de la tecnologia y software y negativas por que no le dedico mucho tiempo a mi familia.</p>
+                </div>
+            </div>
+
+            <!-- G3 - Sub 5 -->
+            <div id="g3-sub5" class="subseccion-contenido subseccion-g3">
+                <div class="card">
+                    <h3>5. Reescribir el proyecto de vida de acuerdo con principios y valores; su responsabilidad</h3>
+                    <p>Desarrolle las siguientes acciones:</p>
+                    <p>Escriba una lista de las personas, instituciones o situaciones en las cuales se podría apoyar, para realizar el paso a paso de su proyecto de vida. (familia, amigos, instituciones, situación económica, social, política, religiosa y cultural que lo rodea).</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">1. Reflexione en qué medida las personas, instituciones o situaciones anteriores le apoyan el proyecto de vida</h4>
+                    <p><strong>R//:</strong> Estos afectan o ayudan en el crecimiento del proyecto de vida, ya que mediante vivencias y situaciones, estas generan el crecimiento y desarrollo personal.</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">2. Describa ¿qué situaciones actuales le impiden que pueda realizar el proyecto de vida?</h4>
+                    <p><strong>R//:</strong> Económicas, familiares, laborales.</p>
+
+                    <h4 style="color: var(--text-main); margin-top: 1rem;">3. Escriba las acciones que podría realizar para superar los impedimentos, para el logro del proyecto de vida</h4>
+                    <p><strong>R//:</strong> Desarrollar estrategias con el fin de establecer metas, una por una, generando un crecimiento personal, así mismo aportando en el desarrollo del proyecto de vida, culminando en la meta establecida en el proyecto de vida.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Servicio Nacional de Aprendizaje SENA &bull; Centro de Manufactura en Textil y Cuero</p>
+        <p class="footer-team">Realizado por: Sebastian Granados &bull; Monica Lopez &bull; David Velandia &bull; Jefferson Mamian &bull; Cristian Calderon</p>
+        <p style="font-size: 0.8rem; color: #777; margin-top: 5px;">&copy; 2026 - Doofenshmirtz Malvados y Asociados &bull; Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function cambiarGuia(event, guiaId) {
+            const secciones = document.getElementsByClassName("seccion-guia");
+            for (let i = 0; i < secciones.length; i++) {
+                secciones[i].classList.remove("active");
+            }
+
+            const botones = document.getElementsByClassName("nav-btn");
+            for (let i = 0; i < botones.length; i++) {
+                botones[i].classList.remove("active");
+            }
+
+            document.getElementById(guiaId).classList.add("active");
+            event.currentTarget.classList.add("active");
+        }
+
+        function cambiarSubGuia(event, subId, contenedorClase, botonClase) {
+            const subSecciones = document.getElementsByClassName(contenedorClase);
+            for (let i = 0; i < subSecciones.length; i++) {
+                subSecciones[i].classList.remove("active");
+            }
+
+            const subBotones = document.getElementsByClassName(botonClase);
+            for (let i = 0; i < subBotones.length; i++) {
+                subBotones[i].classList.remove("active");
+            }
+
+            document.getElementById(subId).classList.add("active");
+            event.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>
